@@ -1,0 +1,197 @@
+CREATE TABLE Student ( 
+
+StudentID INT PRIMARY KEY, 
+FirstName VARCHAR (50), 
+LastName VARCHAR (50), 
+Email VARCHAR (50) Unique, 
+PhoneNumber VARCHAR(50) Unique, 
+UniversityYear VARCHAR (50), 
+Major VARCHAR (50),  
+GradYear VARCHAR(50), 
+IntershipStatus VARCHAR (50), 
+EmploymentStatus VARCHAR (50), 
+); 
+
+
+
+CREATE TABLE Member ( 
+
+MemberID INT PRIMARY KEY, 
+FirstName VARCHAR (50), 
+LastName VARCHAR (50), 
+Email VARCHAR (50), 
+PhoneNumber VARCHAR (50), 
+GradYear VARCHAR (50), 
+Title VARCHAR (50), 
+); 
+
+
+
+CREATE TABLE Mentor ( 
+
+MentorID INT NOT NULL,
+MemberID INT NOT NULL,
+StudentID INT NOT NULL, 
+PRIMARY KEY (MentorID, MemberID, StudentID),
+CONSTRAINT fk_MembersID FOREIGN KEY (MemberID) REFERENCES Member(MemberID),
+CONSTRAINT fk_StudentID FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+); 
+
+
+
+CREATE TABLE Company ( 
+
+CompanyID INT PRIMARY KEY, 
+CompanyName VARCHAR(50), 
+CompanyAddress VARCHAR(50), 
+CompanyPhone VARCHAR(50), 
+); 
+
+
+
+CREATE TABLE Contact ( 
+
+ContactID INT PRIMARY KEY,
+ContactName VARCHAR(50),
+ContactPhone VARCHAR (50),
+ContactEmail VARCHAR(50),
+CompanyID INT,
+CONSTRAINT fk_CompanyID FOREIGN KEY (CompanyID) REFERENCES Company(CompanyID),
+); 
+
+
+
+CREATE TABLE Job ( 
+
+JobID INT PRIMARY KEY, 
+InternshipDescription VARCHAR(50),
+DateStart DATE,
+DateEnd DATE,
+ContactID INT,
+StudentID INT, 
+CONSTRAINT fk_ContactID FOREIGN KEY (ContactID) REFERENCES Contact(ContactID),
+CONSTRAINT fk_StudentsID FOREIGN KEY (StudentID) REFERENCES Student(StudentID), 
+); 
+
+
+
+CREATE TABLE Scholarship ( 
+
+ScholarshipID INT PRIMARY KEY, 
+ScholarshipName VARCHAR(50) Unique,
+ScholarshipYear INT,
+ScholarshipAmount INT,
+MemberID INT,
+CONSTRAINT fk_MemberID FOREIGN KEY (MemberID) REFERENCES Member(MemberID), 
+); 
+
+
+
+CREATE TABLE Application ( 
+
+ApplicationID INT PRIMARY KEY,
+ApplicationDueDate DATE, 
+ApplicationDescription VARCHAR (50), 
+Status VARCHAR (50), 
+Decision VARCHAR (50),
+StudentID INT, 
+ScholarshipID INT, 
+CONSTRAINT fk_StudID FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+CONSTRAINT fk_Scholarship FOREIGN KEY (ScholarshipID) REFERENCES Scholarship (ScholarshipID),
+); 
+
+
+
+
+
+
+INSERT INTO Student VALUES (1,'Taylor','Robertson','RobertsT@dukes.jmu.edu','(804)402-7199','Senior','Management',2022,'None','None'); 
+INSERT INTO Student VALUES (2,'Halvard','Jessamine','JessamineH@dukes.jmu.edu','(202)918-2132','Sophmore','CIS',2024,'Pending', 'None'); 
+INSERT INTO Student VALUES (3,'John','Kennedy','KennedyJ@dukes.jmu.edu','(413)451-8554','Freshman','Biology',2025,'Pending','None'); 
+INSERT INTO Student VALUES (4,'Abraham','Lincoln','LincolnA@dukes.jmu.edu','(847)610-0479','Senior','Chemistry',2022,'None','None'); 
+INSERT INTO Student VALUES (5,'Winston','Chuchill','ChurchillW@dukes.jmu.edu','(505)644-5478','Senior','SMAD',2022, 'Pending','Pending'); 
+INSERT INTO Student VALUES (6,'Elvis','Presley','PresleyE@dukes.jmu.edu','(505)316-3518','Sophmore','SCOM',2024,'Accepted','Accepted'); 
+INSERT INTO Student VALUES (7,'Franklin','Roosevelt','RooseveltF@dukes.jmu.edu','(582)529-6143','Junior','Engineering',2023,'None','None'); 
+INSERT INTO Student VALUES (8,'Thomas','Edison','EdisonT@dukes.jmu.edu','(505)644-3690','Freshman','Undecided',2025,'Accepted','Accepted'); 
+
+
+
+
+INSERT INTO Member VALUES (1,'John','Jones','JonesJ@dukes.jmu.edu','(582)333-0468',2020,'Guidence Councilor'); 
+INSERT INTO Member VALUES (2,'Lyndon','Johnson','JohnsonL@dukes.jmu.edu','(320)263-2051',2017,'Facilitator'); 
+INSERT INTO Member VALUES (3,'Neil','Armstrong','ArmstrongN@dukes.jmu.edu','(206)956-2758',2010,'Administrator'); 
+INSERT INTO Member VALUES (4,'Henry','Ford','FordH@dukes.jmu.edu','(208)967-3266',1999,'Guidence Dean of Students'); 
+INSERT INTO Member VALUES (5,'Michael','Jordan','JonesJ@dukes.jmu.edu','(582)203-0612',2003,'Guidence Councilor'); 
+INSERT INTO Member VALUES (6,'Amelia','Earhart','EarhartA@dukes.jmu.edu','(423)276-6852',2014,'Facilitator'); 
+INSERT INTO Member VALUES (7,'Pablo','Picasso','PicassoP@dukes.jmu.edu','(505)907-2646',2010,'Administrator'); 
+INSERT INTO Member VALUES (8,'Elon','Musk','MuskE@dukes.jmu.edu','(582)333-6572',1980,'Administrator'); 
+
+
+
+INSERT INTO Mentor VALUES (1,2,4); 
+INSERT INTO Mentor VALUES (2,2,5); 
+INSERT INTO Mentor VALUES (3,4,7); 
+INSERT INTO Mentor VALUES (4,3,8); 
+INSERT INTO Mentor VALUES (5,2,1); 
+INSERT INTO Mentor VALUES (6,1,2); 
+INSERT INTO Mentor VALUES (1,4,3); 
+INSERT INTO Mentor VALUES (1,5,6); 
+
+
+
+INSERT INTO Company VALUES (1,'Apple', '1 Apple Park Way', '(505)651-3458'); 
+INSERT INTO Company VALUES (2,'Microsoft', '1 Microsoft Way','(508)821-4592'); 
+INSERT INTO Company VALUES (3,'Sony', 'One World Trade Center 41st Floor', '(582)333-1605'); 
+INSERT INTO Company VALUES (4,'Dell', '1 Dell Way', '(410)344-4235'); 
+INSERT INTO Company VALUES (5,'IBM',  '1 NEW ORCHARD ROAD', '(320)383-7825'); 
+INSERT INTO Company VALUES (6,'Toyota','5895 NW 167th St', '(505)644-9175'); 
+
+
+INSERT INTO Contact VALUES (1,'Steve Jobs', '(505)913-2147','Jobs@apple.com',1); 
+INSERT INTO Contact VALUES (2,'Bill Gates', '(445)798-1104','Gates@Microsoft.com',2); 
+INSERT INTO Contact VALUES (3,'Kenichiro Yoshida', '(203)303-6513','Yoshida@Sony.com',3); 
+INSERT INTO Contact VALUES (4,'Michael Dell', '(412)458-2627','Dell@dell.com',4); 
+INSERT INTO Contact VALUES (5,'Arvind Krishna', '(212)389-4807','Krishna@ibm.com',5); 
+INSERT INTO Contact VALUES (6,'Akio Toyoda', '(505)699-5883','Toyoda@toyota.com',6); 
+
+
+
+INSERT INTO Job VALUES (1,'Software development and implementation','05/1/2022','08/12/2022',1,1); 
+INSERT INTO Job VALUES (2,'Harware Design','05/10/2022','08/2/2022',1,2); 
+INSERT INTO Job VALUES (3,'Pentration Testing','06/1/2022','08/1/2022',2,4); 
+INSERT INTO Job VALUES (4,'Software development','07/1/2022','08/15/2022',2,5); 
+INSERT INTO Job VALUES (5,'Game Development','05/13/2022','08/1/2022',3,6); 
+INSERT INTO Job VALUES (6,'Audo Hardware Design','05/17/2022','08/17/2022',3,7); 
+INSERT INTO Job VALUES (7,'Software Configuration','04/30/2022','07/12/2022',4,8); 
+INSERT INTO Job VALUES (8,'Beta Tester','05/1/2022','08/1/2022',4,1); 
+INSERT INTO Job VALUES (9,'Cybersecurity Intern','05/13/2022','08/3/2022',4,5); 
+INSERT INTO Job VALUES (10,'SQL Database Intern','04/30/2022','07/30/2022',3,5); 
+INSERT INTO Job VALUES (11,'Engineering Intern','05/2/2022','08/16/2022',6,2); 
+INSERT INTO Job VALUES (12,'Safety Inspector/Tester','05/19/2022','08/9/2022',6,2); 
+
+
+INSERT INTO Scholarship VALUES (1,'Zane Showker Excellence Award',2023,5000,4); 
+INSERT INTO Scholarship VALUES (2,'Truman Award',2023,2000,5); 
+INSERT INTO Scholarship VALUES (3,'Hartman Award',2025,6000,3); 
+INSERT INTO Scholarship VALUES (4,'IMB Award',2023,8000,2); 
+INSERT INTO Scholarship VALUES (5,' Freeman Award',2024,2000,1); 
+INSERT INTO Scholarship VALUES (6,'Sussex Grant',2023,1000,5); 
+INSERT INTO Scholarship VALUES (7,'Virginia Public College Grant',2025,3000,6); 
+INSERT INTO Scholarship VALUES (8,'Scoutts Grant',2023,4000,7); 
+INSERT INTO Scholarship VALUES (9,'Gore Innovation Grant',2024,9000,8); 
+INSERT INTO Scholarship VALUES (10,'Brick Award',2023,5000,2); 
+
+
+
+INSERT INTO Application VALUES (1,'1/20/2022','I have shown excellence in my ability in the COB','Pending','Pending',1,1);
+INSERT INTO Application VALUES (2,'2/20/2022','I excelled in my COB 300 project','Pending','Pending',1,3);
+INSERT INTO Application VALUES (3,'3/20/2022','I have gotten excellent grades','Pending','Accepted',2,2);
+INSERT INTO Application VALUES (4,'4/20/2022','I made presidents list last semester','Pending','Accepted',5,3);
+INSERT INTO Application VALUES (5,'5/20/2022','I have done coding projects in my own time','Pending','Accepted',3,7);
+INSERT INTO Application VALUES (6,'6/20/2022','I have two majors and a minor','Pending','Pending',4,5); 
+INSERT INTO Application VALUES (7,'7/20/2022','I demonstrate excellent leadership skills ','Pending','Pending',8,10);
+INSERT INTO Application VALUES (8,'8/20/2022','I have shown excellence in all my studies','Pending','Accepted',6,9);
+INSERT INTO Application VALUES (9,'9/20/2022','I have made deans list four times','Pending','Pending',7,4);
+INSERT INTO Application VALUES (10,'10/20/2022','I have done well on numerous important projects','Pending','Accepted',4,6);
+INSERT INTO Application VALUES (11,'11/20/2022','My GPA is a 3.8 in COB','Pending','Accepted',5,8);
+

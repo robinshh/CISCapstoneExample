@@ -1,0 +1,59 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="DukeGroups.master.cs" Inherits="Lab_1_.DukeGroups" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Henry Robinson Ryan Essex</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+<style type="text/css">
+        .auto-style1 {
+            width: 233px;
+            height: 220px;
+        }
+        #OrgName{
+            color: mediumpurple;
+            font-weight:700;
+            background-color:silver;
+            border:none;
+            margin-left: 2px;
+        }
+        body{
+            background-color: silver;
+        }
+        #BttnStudent, #BttnMentor, #BttnMember, #BttnCompany{
+            color:mediumpurple;
+            background-color: black;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        #Bttns{
+            background-color: white;
+            border-color:black;
+            height:10%;
+            border-style:groove;
+        }
+    </style>
+</head>
+<body>
+    <form id="OverView" runat="server">
+        <div>
+            <asp:ImageButton ID="HomePage" runat="server" src="dukedog.png" Onclick="HomePage_Click"/>
+            <asp:Label ID="OrgName" Text="DukeGroup" Font-Size="x-large" runat="server" Height="120px" Width="438px"></asp:Label>
+                    <div id="Bttns">
+            <asp:Button ID="BttnStudent" runat="server" Text="Student" Onclick="BttnStudent_Click" CausesValidation="false"/>
+
+            <asp:Button ID="BttnMentor" runat="server" Text="Mentor" Onclick="BttnMentor_Click" CausesValidation="false"/>
+
+            <asp:Button ID="BttnMember" runat="server" Text="Member" Onclick="BttnMember_Click" CausesValidation="false"/>
+
+            <asp:Button ID="BttnCompany" runat="server" Text="Company" Onclick="BttnCompany_Click" CausesValidation="false"/>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+            </div>
+    </form>
+</body>
+</html>
+
